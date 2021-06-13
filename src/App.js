@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useDebounce } from './hooks';
+import { useDebounce, useCharacters } from './hooks';
 import { fetchCharacters } from './api';
 
 import Character from './Character';
@@ -8,22 +8,15 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
-  const [characters, setCharacters] = useState([]);
   const [page, setPage] = useState(1);
   const [nameFilter, setNameFilter] = useState('');
   const debouncedNameFilter = useDebounce(nameFilter, 500);
 
   const handleNameFilterChange = (e) => setNameFilter(e.target.value);
 
-  useEffect(() => {
-    fetchCharacters({ page, nameFilter: debouncedNameFilter })
-      .then(res => {
-        setCharacters(prevCharacters => [
-          ...(page === 1 ? [] : prevCharacters),
-          ...res.characters,
-        ]);
-      });
-  }, [page, debouncedNameFilter]);
+  const [
+    { characters, canLoadMore }
+  ] = useCharacters({ page, nameFilter: debouncedNameFilter });
 
   useEffect(() => setPage(1), [debouncedNameFilter]);
 
@@ -48,9 +41,11 @@ function App() {
             ))
           }
         </ul>
-        <button onClick={() => setPage(page + 1)}>
+        { canLoadMore && (
+          <button onClick={() => setPage(page + 1)}>
             Load more
-        </button>
+          </button>
+        )}
       </div>
     </>
   );
