@@ -26,13 +26,17 @@ async function fetchCharacters(page = 1) {
 
 function App() {
   const [characters, setCharacters] = useState([]);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    fetchCharacters()
+    fetchCharacters(page)
       .then(res => {
-        setCharacters(res.characters.results);
+        setCharacters(prevCharacters => [
+          ...prevCharacters,
+          ...res.characters.results,
+        ]);
       });
-  }, []);
+  }, [page]);
 
   return (
     <>
@@ -40,7 +44,7 @@ function App() {
         <img className="logo" src={logo} alt="Logo" />
       </header>
       <div className="content">
-        <h1>Characters Overview</h1>
+        <h1>Characters Overview ({characters.length})</h1>
         <ul class="list">
           {
             characters.map(({ id, name, image, episode = [] }) => (
@@ -54,6 +58,9 @@ function App() {
             ))
           }
         </ul>
+        <button onClick={() => setPage(page + 1)}>
+            Load more
+        </button>
       </div>
     </>
   );
