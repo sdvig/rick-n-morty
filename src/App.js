@@ -1,32 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useDebounce } from './hooks';
-import { fetchData } from './api';
+import { fetchCharacters } from './api';
 
 import Character from './Character';
 
 import logo from './logo.svg';
 import './App.css';
-
-async function fetchCharacters(page = 1, nameFilter = '') {
-  const query = `
-    query {
-      characters(
-        page: ${page},
-        filter: {
-          name: "${nameFilter}",
-        },
-      ) {
-        results {
-          name,
-          id,
-          image,
-        },
-      }
-    }
-  `;
-
-  return await fetchData(query);
-}
 
 function App() {
   const [characters, setCharacters] = useState([]);
@@ -37,11 +16,11 @@ function App() {
   const handleNameFilterChange = (e) => setNameFilter(e.target.value);
 
   useEffect(() => {
-    fetchCharacters(page, debouncedNameFilter)
+    fetchCharacters({ page, nameFilter: debouncedNameFilter })
       .then(res => {
         setCharacters(prevCharacters => [
           ...(page === 1 ? [] : prevCharacters),
-          ...res.characters.results,
+          ...res.characters,
         ]);
       });
   }, [page, debouncedNameFilter]);
