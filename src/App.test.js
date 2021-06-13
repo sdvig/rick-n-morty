@@ -1,8 +1,20 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen } from "@testing-library/react";
+import App from "./App";
+import { mockCharacters } from './mocks';
 
-test('renders learn react link', () => {
+jest.mock('./hooks', () => ({
+  useCharacters: () => [
+    {
+      characters: mockCharacters,
+      canLoadMore: false,
+    },
+  ],
+  useDebounce: (val) => val
+}));
+
+test('renders characters overview', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const charactersOverviewText = screen.getByText(/Characters Overview/i);
+  expect(charactersOverviewText).toBeInTheDocument();
+  expect(charactersOverviewText).toHaveTextContent('(2)');
 });
