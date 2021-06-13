@@ -26,6 +26,10 @@ h5 {
   margin-right: 2rem;
 }
 
+.header button {
+  white-space: nowrap;
+}
+
 .logo {
   width: 15rem;
 }

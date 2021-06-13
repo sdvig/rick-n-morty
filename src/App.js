@@ -15,8 +15,10 @@ function App() {
   const handleNameFilterChange = (e) => setNameFilter(e.target.value);
 
   const [
-    { characters, canLoadMore }
-  ] = useCharacters({ page, nameFilter: debouncedNameFilter });
+    { characters, canLoadMore },
+    sortByName,
+    sortByEpisode,
+  ] = useCharacters({ page, nameFilter });
 
   useEffect(() => setPage(1), [debouncedNameFilter]);
 
@@ -25,6 +27,12 @@ function App() {
       <header className="header">
         <img className="logo" src={logo} alt="Logo" />
         <input placeholder="Filter" onChange={handleNameFilterChange} />
+        <button onClick={sortByName}>
+          Sort by name
+        </button>
+        <button onClick={sortByEpisode}>
+          Sort by episode
+        </button>
       </header>
       <div className="content">
         <h1>Characters Overview ({characters.length})</h1>
