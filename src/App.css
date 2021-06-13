@@ -25,3 +25,45 @@ h1 {
   padding: 1rem 2.5rem 5rem 2.5rem;
 }
 
+.list {
+  margin: 0 0 3rem 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.character {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+  width: 15rem;
+  margin-right: 2rem;
+  margin-bottom: 2rem;
+}
+
+.character-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
+}
+
+.character-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: .75rem;
+}
+
+.character-img {
+  width: 100%;
+  display: block;
+  border-top-left-radius: calc(.25rem - 1px);
+  border-top-right-radius: calc(.25rem - 1px);
+}
+

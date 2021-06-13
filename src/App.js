@@ -1,3 +1,5 @@
+import Character from './Character';
+
 import { mockCharacters } from './mocks';
 
 import logo from './logo.svg';
@@ -11,10 +13,16 @@ function App() {
       </header>
       <div className="content">
         <h1>Characters Overview</h1>
-        <ul>
+        <ul class="list">
           {
-            mockCharacters.map(character => (
-              <li key={character.id}>{character.name}</li>
+            mockCharacters.map(({ id, name, image, episode }) => (
+              <Character
+                id={id}
+                name={name}
+                image={image}
+                episode={episode}
+                key={id}
+              />
             ))
           }
         </ul>
